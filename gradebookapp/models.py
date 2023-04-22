@@ -16,20 +16,20 @@ class Course(models.Model):
         return self.name
 
 
-class Lecturer(models.Model):
-    name = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.name
-
-
 class Class(models.Model):
     name = models.CharField(max_length=200)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    lecturer = models.ForeignKey(Lecturer, on_delete=models.CASCADE)
+    lecturer = models.ForeignKey('Lecturer', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
+class Lecturer(models.Model):
+    name = models.CharField(max_length=200)
+    classes = models.ManyToManyField(Class,related_name='lecturers')
+    def __str__(self):
+        return self.name
+
+
 
 
 class Student(models.Model):
